@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sisi Game</title>
+  </head>
+  <body>
+    <section id="Tela">
+      <div id="Box"></div>
+    </section>
+
+    <style>
+      * {
+        margin: 0;
+      }
+      #Tela {
+        width: 100vw;
+        height: 100vh;
+        background-color: green;
+      }
+
+      #Box {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-image: url(/Assents/Correndo.gif);
+        background-position: center;
+        background-size: contain;
+        bottom: 100px;
+        left: 100px;
+      }
+      .pulando {
+        animation: pular 1s linear;
+      }
+      @keyframes pular {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        25% {
+          transform: translateX(25px) translateY(-25px);
+        }
+        50% {
+          transform: translateX(50px) translateY(-50px);
+        }
+        75% {
+          transform: translateX(75px) translateY(-25px);
+        }
+        100% {
+          transform: translateX(100px) translateY(0);
+        }
+      }
+    </style>
+
+    <script>
+      window.addEventListener('keydown', function (event) {
+        if (event.keyCode === 87) {
+          Pular()
+        }
+      })
+
+      window.addEventListener('keydown', function (event) {
+        if (event.keyCode === 68) {
+          Andar()
+        }
+      })
+
+      function Verificador() {
+        let Caixa = document.getElementById('Box')
+        let EstiloGeralCaixa = getComputedStyle(Caixa)
+        let PosicaoLeftAtual = parseInt(EstiloGeralCaixa.left)
+
+        if (PosicaoLeftAtual >= 1740) {
+          Caixa.style.left = 10 + 'px'
+        }
+      }
+
+      function Pular() {
+        let Caixa = document.getElementById('Box')
+
+        let EstiloGeralCaixa = getComputedStyle(Caixa)
+        let PosicaoLeftAtual = parseInt(EstiloGeralCaixa.left)
+        Verificador()
+        Caixa.classList.add('pulando')
+        Caixa.style.backgroundImage = "url('/Assents/Pulando.gif')"
+        setTimeout(function () {
+          Caixa.classList.remove('pulando')
+          Caixa.style.backgroundImage = "url('/Assents/Correndo.gif')"
+          let PosicaoLeftNova = PosicaoLeftAtual + 100
+          Caixa.style.left = PosicaoLeftNova + 'px'
+          Verificador()
+        }, 950)
+      }
+
+      function Andar() {
+        let Caixa = document.getElementById('Box')
+        let EstiloGeralCaixa = getComputedStyle(Caixa)
+        let PosicaoLeftAtual = parseInt(EstiloGeralCaixa.left)
+        Verificador()
+        let PosicaoLeftNova = PosicaoLeftAtual + 10
+        Caixa.style.left = PosicaoLeftNova + 'px'
+        Verificador()
+      }
+    </script>
+  </body>
+</html>
